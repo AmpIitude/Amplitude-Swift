@@ -16,13 +16,27 @@ let package = Package(
         .library(
             name: "AmplitudeSwift",
             targets: ["AmplitudeSwift"]
+        ),
+        .library(
+            name: "AmplitudeExtensions",
+            targets: ["AmplitudeExtensions"]
         )
     ],
     dependencies: [
         .package(url: "https://github.com/amplitude/analytics-connector-ios.git", from: "1.3.2"),
         .package(url: "https://github.com/amplitude/AmplitudeCore-Swift.git", from: "1.6.1"),
+        .package(url: "https://github.com/adjust/ios_sdk", branch: "master"),
+        .package(url: "https://github.com/OneSignal/OneSignal-XCFramework", .upToNextMajor(from: "5.8.0")),
     ],
     targets: [
+        .target(
+            name: "AmplitudeExtensions",
+            dependencies: [
+                .product(name: "AdjustSdk", package: "ios_sdk"),
+                .product(name: "OneSignalFramework", package: "OneSignal-XCFramework"),
+            ],
+            path: "AmplitudeExtensions"
+        ),
         .target(
             name: "AmplitudeSwift",
             dependencies: [
